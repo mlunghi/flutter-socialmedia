@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'single_post.dart';
+import 'feed.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
       body: ListView.builder (
         itemCount: 5, //number of items to display in list
         itemBuilder: (BuildContext content, int index) { 
-          return SinglePost(); //function to build each item
+          return Feed(); //function to build each item
         },
       ),
     );

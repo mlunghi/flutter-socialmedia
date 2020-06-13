@@ -8,8 +8,6 @@ class Leaf extends StatelessWidget {
 
   const Leaf({Key key}) : super(key:key);
 
- 
-
   @override
   Widget build(BuildContext content) {
      SystemChrome.setPreferredOrientations([
