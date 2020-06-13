@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'demo_values.dart';
 import 'feed.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,9 +12,9 @@ class HomePage extends StatelessWidget {
         title: Text("Leaf"),
       ),
       body: ListView.builder (
-        itemCount: 5, //number of items to display in list
+        itemCount: 3, //number of items to display in list
         itemBuilder: (BuildContext content, int index) { 
-          return Feed(); //function to build each item
+          return PostCard(postData: DemoValues.posts[index],); //function to build each item
         },
       ),
     );

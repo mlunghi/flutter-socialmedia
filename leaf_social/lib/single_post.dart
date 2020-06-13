@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'demo_values.dart';
 
 class SinglePost extends StatelessWidget {
 
@@ -12,7 +11,6 @@ class SinglePost extends StatelessWidget {
       appBar: AppBar(
         title: Text("Leaf"),
       ),
-      body: Image.asset(DemoValues.postImage),
     );
   }
 

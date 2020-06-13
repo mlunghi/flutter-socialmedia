@@ -1,13 +1,17 @@
 
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'demo_values.dart';
+import 'single_post.dart';
 import 'themes.dart';
 import 'single_post.dart';
+import 'post_model.dart';
+import 'inherited_post.dart';
+import 'user_details.dart';
 
-class Feed extends StatelessWidget {
-  const Feed({Key key}) : super(key: key);
+class PostCard extends StatelessWidget {
+  final PostModel postData;
+
+  const PostCard({Key key, @required this.postData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,26 +19,29 @@ class Feed extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        // this function will handle the navigation to the new page
-        Navigator.push(context, MaterialPageRoute(
-          builder: (BuildContext context) {
-            return SinglePost();
-          }
-        ));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (BuildContext context) {
+          return SinglePost();
+        }));
       },
       child: AspectRatio(
         aspectRatio: aspectRatio,
         child: Card(
           elevation: 2,
           child: Container(
-            margin: const EdgeInsets.all(4.0),
-            padding: const EdgeInsets.all(4.0),
-            child: Column(
-              children: <Widget>[
-                _Post(),
-                Divider(color: Colors.grey),
-                _PostDetails(),
-              ],
+            margin: const EdgeInsets.all(1.0),
+            padding: const EdgeInsets.all(1.0),
+            
+            // I created it here!
+            child: InheritedPostModel(
+              postData: postData,
+              child: Column(
+                children: <Widget>[
+                  _Post(),
+                  Divider(color: Colors.grey),
+                  _PostDetails(),
+                ],
+              ),
             ),
           ),
         ),
@@ -62,8 +69,9 @@ class _PostTitleAndSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextStyle titleTheme = Theme.of(context).textTheme.title;
     final TextStyle summaryTheme = Theme.of(context).textTheme.body1;
-    final String title = DemoValues.postTitle;
-    final String summary = DemoValues.postSummary;
+    final PostModel postData = InheritedPostModel.of(context).postData;
+    final String title = postData.title;
+    final String summary = postData.summary;
 
     return Expanded(
       flex: 3,
@@ -85,10 +93,12 @@ class _PostTitleAndSummary extends StatelessWidget {
 
 class _PostImage extends StatelessWidget {
   const _PostImage({Key key}) : super(key: key);
+  
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(flex: 2, child: Image.asset(DemoValues.postImage));
+    final PostModel postData = InheritedPostModel.of(context).postData;
+    return Expanded(flex: 2, child: Image.asset(postData.imageURL));
   }
 }
 
@@ -97,65 +107,13 @@ class _PostDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PostModel postData = InheritedPostModel.of(context).postData;
+
     return Row(
       children: <Widget>[
-        _UserImage(),
-        _UserNameAndEmail(),
-        _PostTimeStamp(),
+        Expanded(flex: 3, child: UserDetails(userData: postData.author)),
+        //Expanded(flex: 1, child: PostStats()),
       ],
-    );
-  }
-}
-
-class _UserNameAndEmail extends StatelessWidget {
-  const _UserNameAndEmail({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final TextStyle nameTheme = Theme.of(context).textTheme.subtitle;
-    final TextStyle emailTheme = Theme.of(context).textTheme.body1;
-
-    return Expanded(
-      flex: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(DemoValues.userName, style: nameTheme),
-            SizedBox(height: 2.0),
-            Text(DemoValues.userEmail, style: emailTheme),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _UserImage extends StatelessWidget {
-  const _UserImage({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      flex: 1,
-      child: CircleAvatar(
-        backgroundImage: AssetImage(DemoValues.userImage),
-      ),
-    );
-  }
-}
-
-class _PostTimeStamp extends StatelessWidget {
-  const _PostTimeStamp({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final TextStyle timeTheme = TextThemes.dateStyle;
-    return Expanded(
-      flex: 2,
-      child: Text(DemoValues.postTime, style: timeTheme),
     );
   }
 }
