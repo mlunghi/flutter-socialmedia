@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'single_post.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -9,8 +10,11 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Leaf"),
       ),
-      body: Center(
-        child: Text("Hello world!"),
+      body: ListView.builder (
+        itemCount: 5, //number of items to display in list
+        itemBuilder: (BuildContext content, int index) { 
+          return SinglePost(); //function to build each item
+        },
       ),
     );
   }
