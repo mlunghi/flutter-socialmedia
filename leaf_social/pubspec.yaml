@@ -51,6 +51,10 @@ flutter:
   assets:
     - assets/post.png
     - assets/profile.png
+    - assets/namik.png
+    - assets/hossam.png
+    - assets/namik-post.png
+    - assets/hossam-post.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
